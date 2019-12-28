@@ -76,6 +76,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	m_fileName.push_back("media\\model\\animation\\animation_all.mv1");
 	m_fileType.push_back(ELOADFILE::model);
+	m_fileName.push_back("media\\model\\animation\\animation_all.mv1");
+	m_fileType.push_back(ELOADFILE::model);
 
 	LoadThread* mp_loadThread = new LoadThread(m_fileName.size(), m_fileName, m_fileType, LoadScreen);
 

@@ -150,7 +150,7 @@ void Character::MoveProcess(const float t_angle)
 
 
 /// ------------------------------------------------------------------------------------
-Character::Character(const int& t_model)
+Character::Character(const int& t_model, const int& t_panelModel)
 {
 	m_model = 0;
 	m_model = MV1DuplicateModel(t_model);
@@ -160,6 +160,8 @@ Character::Character(const int& t_model)
 	m_totalTime = MV1GetAttachAnimTotalTime(m_model, m_attachMotion);
 
 	m_area = VGet(0.0f, 0.0f, 0.0f);
+	preArea = m_area;
+	m_modelHeight = MV1GetFramePosition(m_model, 7).y;
 
 	m_walkSpeed = 5.0f;
 	m_animSpeed = 0.5f;
@@ -183,6 +185,8 @@ Character::~Character()
 void Character::Draw()
 {
 	MV1DrawModel(m_model);
+
+	DrawCapsule3D(m_area, VAdd(m_area, VGet(0.0f, m_modelHeight, 0.0f)), 50.0f, 8, GetColor(0, 255, 0), GetColor(255, 255, 255), false);
 }
 
 
@@ -190,6 +194,8 @@ void Character::Draw()
 /// ------------------------------------------------------------------------------------
 void Character::Process(const float t_angle)
 {
+	preArea = m_area;
+
 	MoveProcess(t_angle);
 
 	if (m_moveFlag)
@@ -205,4 +211,35 @@ void Character::Process(const float t_angle)
 
 	MV1SetRotationXYZ(m_model, VGet(0.0f, t_angle, 0.0f));
 	MV1SetPosition(m_model, m_area);
+}
+
+
+
+/// -------------------------------------------------------------------------
+bool Character::HitCircleReturn(VECTOR hitOneArea, float width)
+{
+	VECTOR subVec;
+	float length;
+	VECTOR pushVec;
+
+
+	subVec = VSub(m_area, hitOneArea);				// ベクトル差を算出
+	subVec.y = 0.0f;								// Ｙ軸は見ない
+	length = VSize(subVec);							// 二人の距離を算出
+	pushVec = VScale(subVec, 1.0f / length);		// ベクトル差を正規化
+
+
+	// 二人の距離が相手の幅より小さかったら押し出す処理をする
+	if (length - width < 0)
+	{
+		float tempY = 0.0f;
+		tempY = m_area.y;
+		m_area = VAdd(hitOneArea, VScale(pushVec, width));
+		m_area.y = tempY;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

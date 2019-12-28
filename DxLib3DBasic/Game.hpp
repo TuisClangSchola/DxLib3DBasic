@@ -2,6 +2,8 @@
 #include "Basic.hpp"
 #include "Character.hpp"
 #include "Camera.hpp"
+#include "Panel.hpp"
+
 
 
 /*
@@ -12,6 +14,7 @@ class Game
 private:
 	Camera* mp_camera;
 	Character* mp_character;
+	Panel* mp_panel;
 
 	std::vector<ELOADFILE> m_fileType;
 
