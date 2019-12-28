@@ -10,22 +10,22 @@ class Camera
 {
 private:
 	// カメラの位置
-	VECTOR cameraPerspectiveArea;		// 遠近法カメラ
+	VECTOR m_cameraPerspectiveArea;		// 遠近法カメラ
 
 	// 注視する方向
-	VECTOR perspesctiveViewArea;		// 遠近法カメラ
+	VECTOR m_perspesctiveViewArea;		// 遠近法カメラ
 
 	// キャラ位置
-	VECTOR charaArea;
+	VECTOR m_charaArea;
 
 	// キャラクターのアングル
-	float angle;
+	float m_angle;
 
 	// 回転スピード
-	float speed;
+	float m_speed;
 
 	// 回転を行う関数
-	void RLrotate(const float speed, float& axisOne, float& axisTwo);
+	void RLrotate(const float t_speed, float& t_axisOne, float& t_axisTwo);
 
 	// マウスの位置
 	int m_mouseAreaX, m_mouseAreaY;
@@ -33,18 +33,25 @@ private:
 
 public:
 	// キャラの位置を引数に取ったコンストラクタ
-	Camera(const VECTOR charaarea);
+	Camera(const VECTOR t_charaarea);
 
 	// デストラクタ
 	~Camera();
 
 
 	// キャラの位置を引数に取ったプロセス
-	void Process(const VECTOR charaarea);
+	void Process(const VECTOR t_charaarea);
 
 	// キャラクターのアングル
-	const float GetAngle() const { return angle; }
+	const float GetAngle() const { return m_angle; }
 
 	// カメラの座標
-	const VECTOR GetArea() const { return cameraPerspectiveArea; }
+	const VECTOR GetArea() const { return m_cameraPerspectiveArea; }
 };
+
+
+/*
+ちょっとプログラムに意地悪をしました(*''ω''*)。理由：だんだんめんどくさくなってきた
+それを考慮してアドバイス。
+その１：3D音源を配置するのであればカメラと同じ感じでリスナー用のものがいる。こんなのSet3DSoundListenerPosAndFrontPos_UpVecY
+*/

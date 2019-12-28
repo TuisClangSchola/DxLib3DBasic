@@ -54,7 +54,7 @@ public:
 	void Draw();
 	void Process(const float t_angle);
 
-	bool HitCircleReturn(VECTOR hitUnderArea, float width);
+	bool HitCircleReturn(VECTOR t_hitUnderArea, float t_width);
 
 	const VECTOR GetArea() const { return m_area; }
 
@@ -63,13 +63,13 @@ public:
 
 
 /*
-ちょっとプログラムに意地悪をしました。正確に言えば俺が作ったときのやつから色々削った(*''ω''*)。理由：だんだんめんどくさくなってきた
+ちょっとプログラムに意地悪をしました(*''ω''*)。理由：だんだんめんどくさくなってきた
 それを考慮してアドバイス。
 その１：キーボードのみの制御しかしていない。コントローラーでやるならスティックの傾きを正確にやる必要がある。ちなみにその場合デッドロックについても考慮しないと凄いことになる。
 その２：斜め方向めちゃ早い。*sqrt(2)とかをやればよくなる。
 その３：前しか向いてない。MV1SetRotationXYZに一工夫入れるだけで出来る。
 その４：スッと移動する。ゆっくり移動させゆっくり停止させる必要がある。
-その５：ステージのあたり判定ない（というかモデル無い）。実際に3Dやるなら地面よりちょい上にリスポーンさせるようにしないと確率で虚空に沈む。
+その５：0,0,0のところにリスポーンさせてる。実際に3Dやるなら地面よりちょい上にリスポーンさせるようにしないと確率で虚空に沈む。
 その５：ステージとかOBB以外のあたり判定の処理はさせてない。参考としてこれが良い。https://dxlib.xsrv.jp/program/dxprogram_3DAction.html 内の→ void Player_Move( VECTOR MoveVector )
 その６：光源とか明るさとか何も弄ってないからめっちゃ暗い。楽するならマテリアル関係の関数使って無理やり明るくさせる。
 その７：影が無い。足元の影なら、https://dxlib.xsrv.jp/program/dxprogram_3DAction.html 内の→void Player_ShadowRender( void )を参考にすればいい。楽して影を作りたければSetUseShadowMapを使えばいい。正確にやりたいならシェーダ。なんにしても影を付けるモデル（ステージモデル）とかないと出来ない（やりにくい）。

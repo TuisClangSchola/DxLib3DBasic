@@ -9,30 +9,30 @@ class LoadThread
 {
 private:
 	// ロードした個数
-	int num;
+	int m_num;
 
 	// 最大ロード個数
-	int maxNum;
+	int m_maxNum;
 
 	// ロードしたもの
-	std::vector<int> loadData;
+	std::vector<int> m_loadData;
 
 	// ロードしたもののタイプ
-	std::vector<ELOADFILE> loadType;
+	std::vector<ELOADFILE> m_loadType;
 
 	// 終了したかどうか
-	bool end;
+	bool m_end;
 
 	// ロード画面
 	std::function<void(const int, const int, const int)> m_function;
 
 	// ロードの時間
-	int time;
+	int m_time;
 
 
 public:
 	// コンストラクタ
-	LoadThread(const int max, const std::vector<std::string> path, const std::vector<ELOADFILE> type, std::function<void(const int, const int, const int)> t_loadFunc);
+	LoadThread(const int t_max, const std::vector<std::string> t_path, const std::vector<ELOADFILE> t_type, std::function<void(const int, const int, const int)> t_loadFunc);
 
 	// デストラクタ
 	~LoadThread();
@@ -43,8 +43,8 @@ public:
 
 
 	// ロードしたものを渡す
-	const std::vector<int> GetFile() const { return loadData; }
+	const std::vector<int> GetFile() const { return m_loadData; }
 
 	// ロード終えたかどうか
-	const bool GetEnd() const { return end; }
+	const bool GetEnd() const { return m_end; }
 };

@@ -39,12 +39,3 @@ namespace BasicParam
 // シャドウマップ解放マクロ
 #define SHADOW_MAP_RELEASE(p) { if(p!=-1) { DeleteShadowMap(p); (p)=-1; } }
 
-
-
-/*
-全体の基本的なことを管理する
-*/
-class Basic
-{
-};
-

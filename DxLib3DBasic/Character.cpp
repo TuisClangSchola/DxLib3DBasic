@@ -223,13 +223,12 @@ bool Character::HitCircleReturn(VECTOR hitOneArea, float width)
 	VECTOR pushVec;
 
 
-	subVec = VSub(m_area, hitOneArea);				// ベクトル差を算出
-	subVec.y = 0.0f;								// Ｙ軸は見ない
-	length = VSize(subVec);							// 二人の距離を算出
-	pushVec = VScale(subVec, 1.0f / length);		// ベクトル差を正規化
+	subVec = VSub(m_area, hitOneArea);
+	subVec.y = 0.0f;
+	length = VSize(subVec);
+	pushVec = VScale(subVec, 1.0f / length);
 
 
-	// 二人の距離が相手の幅より小さかったら押し出す処理をする
 	if (length - width < 0)
 	{
 		float tempY = 0.0f;

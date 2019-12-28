@@ -116,3 +116,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	return 0;
 }
+
+
+/*
+全体的に一つ言えること。完ぺきではない。
+*/
