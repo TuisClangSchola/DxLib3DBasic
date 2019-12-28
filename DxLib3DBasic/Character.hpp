@@ -17,10 +17,29 @@ private:
 
 	bool m_moveFlag;
 
-	enum class DIRECTION { left, down, right, up };
+	float m_animSpeed;
 
-	bool m_direction[4];
-	bool m_preDirection[4];
+	int m_attachMotion;
+
+	int m_attachNum;
+
+	float m_totalTime;
+
+	float m_nowPlayTime;
+
+	float m_motionBlendTime;
+
+	int m_preAttach;
+
+	float m_preMotionPlayTime;
+
+	enum class MOTION { dash, idle };
+
+	void Player_PlayAnim(int attach);
+
+	void Player_AnimProcess();
+
+	void MoveProcess(const float t_angle);
 
 
 public:
@@ -41,6 +60,6 @@ public:
 その１：キーボードのみの制御しかしていない。コントローラーでやるならスティックの傾きを正確にやる必要がある。
 その２：斜め方向めちゃ早い。*sqrt(2)とかをやればよくなる。
 その３：前しか向いてない。MV1SetRotationXYZに一工夫入れるだけで出来る。
-その４：ゆっくり停止していない。単純にめんどくさくなった。
+その４：スッと移動する。ゆっくり移動させゆっくり停止させる必要がある。
 */
 
