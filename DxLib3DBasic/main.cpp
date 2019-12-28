@@ -1,8 +1,8 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
-#include "DxLib.h"
 #include <string>
 #include "LoadThread.hpp"
+#include "Game.hpp"
 
 
 
@@ -17,9 +17,9 @@ int bitColor = 0;
 /// --------------------------------------------------------------------------------------------------
 // ロード画面用
 int loadDraw;
-void LoadScreen(const int time, const int max, const int now)
+void LoadScreen(const int t_time, const int t_max, const int t_now)
 {
-	int angle = time % 32;
+	int angle = t_time % 32;
 	DrawRotaGraph(winWidth / 2, winHeight / 2, 1.0f, static_cast<int>(M_PI / angle), loadDraw, false);
 }
 
@@ -90,6 +90,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	std::vector<int> m_loadFile;
 
+	Game* mp_game = nullptr;
+
 
 	// メインループ
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && !CheckHitKey(KEY_INPUT_ESCAPE))
@@ -101,59 +103,61 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			{
 				loadNow = false;
 				m_loadFile = mp_loadThread->GetFile();
-				delete mp_loadThread;
+				POINTER_RELEASE(mp_loadThread);
+				mp_game = new Game(m_fileType, m_loadFile);
+				for (int i = 0; i < m_fileName.size(); ++i)
+				{
+					switch (m_fileType.at(i))
+					{
+						// UI関係の画像のとき
+					case ELOADFILE::graph:
+						GRAPHIC_RELEASE(m_loadFile.at(i));
+						break;
+
+
+						// 2D系SEのとき
+					case ELOADFILE::soundEffect:
+						SOUND_RELEASE(m_loadFile.at(i));
+						break;
+
+
+						// モデルデータのとき
+					case ELOADFILE::model:
+						MODEL_RELEASE(m_loadFile.at(i));
+						break;
+
+
+						// BGMのとき
+					case ELOADFILE::backGroundMusic:
+						SOUND_RELEASE(m_loadFile.at(i));
+						break;
+
+
+						// 3Dサウンドのとき
+					case ELOADFILE::sound3DEffect:
+						SOUND_RELEASE(m_loadFile.at(i));
+						break;
+
+
+					default:
+						break;
+					}
+				}
+				std::vector<int>().swap(m_loadFile);
+				std::vector<std::string>().swap(m_fileName);
+				std::vector<ELOADFILE>().swap(m_fileType);
 			}
 		}
 		else
 		{
-			printfDx("%d\n", m_loadFile.at(0));
+			mp_game->Update();
 		}
 	}
 
 
 	// 削除
-	for (int i = 0; i < m_fileName.size(); ++i)
-	{
-		switch (m_fileType.at(i))
-		{
-			// UI関係の画像のとき
-		case ELOADFILE::graph:
-			DeleteGraph(m_loadFile.at(i));
-			break;
-
-
-			// 2D系SEのとき
-		case ELOADFILE::soundEffect:
-			DeleteSoundMem(m_loadFile.at(i));
-			break;
-
-
-			// モデルデータのとき
-		case ELOADFILE::model:
-			MV1DeleteModel(m_loadFile.at(i));
-			break;
-
-
-			// BGMのとき
-		case ELOADFILE::backGroundMusic:
-			DeleteSoundMem(m_loadFile.at(i));
-			break;
-
-
-			// 3Dサウンドのとき
-		case ELOADFILE::sound3DEffect:
-			DeleteSoundMem(m_loadFile.at(i));
-			break;
-
-
-		default:
-			break;
-		}
-	}
-	std::vector<int>().swap(m_loadFile);
-	std::vector<std::string>().swap(m_fileName);
-	std::vector<ELOADFILE>().swap(m_fileType);
-	DeleteGraph(loadDraw);
+	POINTER_RELEASE(mp_game);
+	GRAPHIC_RELEASE(loadDraw);
 	DxLib_End();		// DXライブラリの後始末
 
 

@@ -73,31 +73,31 @@ LoadThread::~LoadThread()
 		{
 			// UI関係の画像のとき
 		case ELOADFILE::graph:
-			DeleteGraph(loadData.at(i));
+			GRAPHIC_RELEASE(loadData.at(i));
 			break;
 
 
 			// 2D系SEのとき
 		case ELOADFILE::soundEffect:
-			DeleteSoundMem(loadData.at(i));
+			SOUND_RELEASE(loadData.at(i));
 			break;
 
 
 			// モデルデータのとき
 		case ELOADFILE::model:
-			MV1DeleteModel(loadData.at(i));
+			MODEL_RELEASE(loadData.at(i));
 			break;
 
 
 			// BGMのとき
 		case ELOADFILE::backGroundMusic:
-			DeleteSoundMem(loadData.at(i));
+			SOUND_RELEASE(loadData.at(i));
 			break;
 
 
 			// 3Dサウンドのとき
 		case ELOADFILE::sound3DEffect:
-			DeleteSoundMem(loadData.at(i));
+			SOUND_RELEASE(loadData.at(i));
 			break;
 
 

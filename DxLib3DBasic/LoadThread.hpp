@@ -1,14 +1,6 @@
 #pragma once
-#include <vector>
-#include <string>
-#include <functional>
-#include "DxLib.h"
+#include "Basic.hpp"
 
-
-/*
-ロードのファイルを指定するための列挙
-*/
-enum class ELOADFILE { graph, soundEffect, model, backGroundMusic, sound3DEffect };
 
 /*
 非同期でロードを行うクラス
