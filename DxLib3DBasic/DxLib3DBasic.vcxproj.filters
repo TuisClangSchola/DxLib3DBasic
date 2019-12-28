@@ -13,10 +13,66 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\Actor">
+      <UniqueIdentifier>{1e73fb13-1a4a-40cf-9c99-b96ca4a7ff54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Actor">
+      <UniqueIdentifier>{a085387a-765a-4762-8e12-9cb3aecb83b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Actor\StageObject">
+      <UniqueIdentifier>{129bbc1f-50c5-41cf-b82f-16a59456aacf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Actor\StageObject">
+      <UniqueIdentifier>{9ae6a318-b120-4eb2-88ac-e8bc8bc015ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Actor\Creature">
+      <UniqueIdentifier>{e4507cc8-7f1b-4883-9ce1-07f1981ce4a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Actor\Creature\Character">
+      <UniqueIdentifier>{4d95c1be-1c96-4c5b-b31e-fc8447aa4b0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Actor\Creature">
+      <UniqueIdentifier>{e5512b64-25b1-4284-89e3-a6742e5e60d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Actor\Creature\Character">
+      <UniqueIdentifier>{716b7aff-ac02-457e-97e3-1cb422e1d72b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Basic.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicObject.cpp">
+      <Filter>ソース ファイル\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Panel.cpp">
+      <Filter>ソース ファイル\Actor\StageObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>ソース ファイル\Actor\Creature\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicCreature.cpp">
+      <Filter>ソース ファイル\Actor\Creature</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Basic.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicObject.hpp">
+      <Filter>ヘッダー ファイル\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Panel.hpp">
+      <Filter>ヘッダー ファイル\Actor\StageObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.hpp">
+      <Filter>ヘッダー ファイル\Actor\Creature\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicCreature.hpp">
+      <Filter>ヘッダー ファイル\Actor\Creature</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
