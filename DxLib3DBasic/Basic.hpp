@@ -14,6 +14,18 @@ enum class ELOADFILE { graph, soundEffect, model, backGroundMusic, sound3DEffect
 
 
 /*
+ウィンドウサイズを決める
+*/
+namespace BasicParam
+{
+	extern int winWidth;
+	extern int winHeight;
+	extern int bitColor;
+}
+
+
+
+/*
 マクロ
 */
 // ポインタ用解放マクロ

@@ -11,6 +11,7 @@ class Game
 {
 private:
 	Camera* mp_camera;
+	Character* mp_character;
 
 	std::vector<ELOADFILE> m_fileType;
 
@@ -18,7 +19,7 @@ private:
 
 
 public:
-	Game(std::vector<ELOADFILE>& t_fileType, std::vector<int>& t_fileData);
+	Game(const std::vector<int>& t_fileData);
 	~Game();
 
 

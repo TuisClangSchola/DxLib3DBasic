@@ -27,8 +27,8 @@ private:
 	// 回転を行う関数
 	void RLrotate(const float speed, float& axisOne, float& axisTwo);
 
-	// 上下回転用
-	VECTOR zRota;
+	// マウスの位置
+	int m_mouseAreaX, m_mouseAreaY;
 
 
 public:

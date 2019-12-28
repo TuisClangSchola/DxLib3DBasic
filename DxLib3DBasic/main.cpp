@@ -5,20 +5,12 @@
 
 
 /// --------------------------------------------------------------------------------------------------
-// ウィンドウサイズを決める
-int winWidth = 0;
-int winHeight = 0;
-int bitColor = 0;
-
-
-
-/// --------------------------------------------------------------------------------------------------
 // ロード画面用
 int loadDraw;
 void LoadScreen(const int t_time, const int t_max, const int t_now)
 {
 	int angle = t_time % 32;
-	DrawRotaGraph(winWidth / 2, winHeight / 2, 1.0f, static_cast<int>(DX_PI_F / angle), loadDraw, false);
+	DrawRotaGraph(BasicParam::winWidth / 2, BasicParam::winHeight / 2, 1.0f, static_cast<int>(DX_PI_F / angle), loadDraw, false);
 }
 
 
@@ -26,9 +18,9 @@ void LoadScreen(const int t_time, const int t_max, const int t_now)
 /// --------------------------------------------------------------------------------------------------
 bool Init(const int t_winWidth, const int t_winHeight, const int t_bitColor, std::string t_projectName)
 {
-	winWidth = t_winWidth;
-	winHeight = t_winHeight;
-	bitColor = t_bitColor;
+	BasicParam::winWidth = t_winWidth;
+	BasicParam::winHeight = t_winHeight;
+	BasicParam::bitColor = t_bitColor;
 
 #ifdef _DEBUG
 	SetOutApplicationLogValidFlag(TRUE);	// ログテキスト出力する
@@ -42,9 +34,9 @@ bool Init(const int t_winWidth, const int t_winHeight, const int t_bitColor, std
 	ChangeWindowMode(TRUE);						// ウィンドウズモードにさせる
 
 
-	SetGraphMode(winWidth, winHeight, bitColor);			// 画面サイズ設定
-	GetDefaultState(&winWidth, &winHeight, &bitColor);		// デフォルトウィンドウ値を得る
-	SetWindowSize(winWidth, winHeight);					// デフォルトウィンドウサイズに合わせてゲームサイズを変更
+	SetGraphMode(BasicParam::winWidth, BasicParam::winHeight, BasicParam::bitColor);			// 画面サイズ設定
+	GetDefaultState(&BasicParam::winWidth, &BasicParam::winHeight, &BasicParam::bitColor);		// デフォルトウィンドウ値を得る
+	SetWindowSize(BasicParam::winWidth, BasicParam::winHeight);					// デフォルトウィンドウサイズに合わせてゲームサイズを変更
 
 	SetUseDirect3DVersion(DX_DIRECT3D_11);		// Direct3D11を使用する
 	SetEnableXAudioFlag(TRUE);					// XAudioを使用するようにする
@@ -62,6 +54,7 @@ bool Init(const int t_winWidth, const int t_winHeight, const int t_bitColor, std
 
 	SetAlwaysRunFlag(TRUE);			// 裏画面でも常にアクティブに変更
 	SetDrawScreen(DX_SCREEN_BACK);	// 背景描画
+	SetMouseDispFlag(FALSE);		// マウスカーソルを消す
 
 
 	return true;
@@ -86,8 +79,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	LoadThread* mp_loadThread = new LoadThread(m_fileName.size(), m_fileName, m_fileType, LoadScreen);
 
-	std::vector<int> m_loadFile;
-
 	Game* mp_game = nullptr;
 
 
@@ -100,48 +91,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			if (mp_loadThread->GetEnd())
 			{
 				loadNow = false;
-				m_loadFile = mp_loadThread->GetFile();
+				mp_game = new Game(mp_loadThread->GetFile());
+
 				POINTER_RELEASE(mp_loadThread);
-				mp_game = new Game(m_fileType, m_loadFile);
-				for (int i = 0; i < m_fileName.size(); ++i)
-				{
-					switch (m_fileType.at(i))
-					{
-						// UI関係の画像のとき
-					case ELOADFILE::graph:
-						GRAPHIC_RELEASE(m_loadFile.at(i));
-						break;
 
-
-						// 2D系SEのとき
-					case ELOADFILE::soundEffect:
-						SOUND_RELEASE(m_loadFile.at(i));
-						break;
-
-
-						// モデルデータのとき
-					case ELOADFILE::model:
-						MODEL_RELEASE(m_loadFile.at(i));
-						break;
-
-
-						// BGMのとき
-					case ELOADFILE::backGroundMusic:
-						SOUND_RELEASE(m_loadFile.at(i));
-						break;
-
-
-						// 3Dサウンドのとき
-					case ELOADFILE::sound3DEffect:
-						SOUND_RELEASE(m_loadFile.at(i));
-						break;
-
-
-					default:
-						break;
-					}
-				}
-				std::vector<int>().swap(m_loadFile);
 				std::vector<std::string>().swap(m_fileName);
 				std::vector<ELOADFILE>().swap(m_fileType);
 			}

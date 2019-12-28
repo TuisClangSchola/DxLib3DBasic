@@ -3,9 +3,11 @@
 
 
 /// ------------------------------------------------------------------------------------
-Game::Game(std::vector<ELOADFILE>& t_fileType, std::vector<int>& t_fileData)
+Game::Game(const std::vector<int>& t_fileData)
 {
-	mp_camera = new Camera(VGet(0.0f, 0.0f, 0.0f));
+	mp_character = new Character(t_fileData.at(0));
+
+	mp_camera = new Camera(mp_character->GetArea());
 }
 
 
@@ -48,6 +50,9 @@ void Game::Update()
 
 	SetUseZBufferFlag(FALSE);
 
+	mp_character->Draw();
 
-	mp_camera->Process(VGet(0.0f, 0.0f, 0.0f));
+
+	mp_camera->Process(mp_character->GetArea());
+	mp_character->Process(mp_camera->GetAngle());
 }
