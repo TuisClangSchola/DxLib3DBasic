@@ -5,6 +5,9 @@
 #include "DxLib.h"
 
 
+/*
+ロードのファイルを指定するための列挙
+*/
 enum class ELOADFILE { graph, soundEffect, model, backGroundMusic, sound3DEffect };
 
 /*
