@@ -1,5 +1,3 @@
-#define _USE_MATH_DEFINES
-#include <cmath>
 #include <string>
 #include "LoadThread.hpp"
 #include "Game.hpp"
@@ -20,7 +18,7 @@ int loadDraw;
 void LoadScreen(const int t_time, const int t_max, const int t_now)
 {
 	int angle = t_time % 32;
-	DrawRotaGraph(winWidth / 2, winHeight / 2, 1.0f, static_cast<int>(M_PI / angle), loadDraw, false);
+	DrawRotaGraph(winWidth / 2, winHeight / 2, 1.0f, static_cast<int>(DX_PI_F / angle), loadDraw, false);
 }
 
 

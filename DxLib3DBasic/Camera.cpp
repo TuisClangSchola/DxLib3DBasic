@@ -34,7 +34,6 @@ Camera::Camera(const VECTOR charaarea)
 	// 遠近法カメラだったら
 	SetCameraNearFar(100.0f, 9500.0f);	// カメラの描画範囲を指定
 	SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea), VAdd(perspesctiveViewArea, charaArea));
-	// SoundProcess::Set3DRadius(VSize(cameraPerspectiveArea));
 }
 
 
@@ -52,43 +51,34 @@ void Camera::Process(const VECTOR charaarea)
 	charaArea = VAdd(charaarea, VGet(0.0f, 80.0f, 0.0f));		// キャラの位置を更新
 
 
-	//// 左に回転中
-	//if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_X) < 0)
-	//{
-	//	// 遠近法カメラの回転処理
-	//	RLrotate(speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f), cameraPerspectiveArea.x, cameraPerspectiveArea.z);
-	//	// 正射影カメラの回転処理
-	//	RLrotate(speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f), cameraOrthoArea.x, cameraOrthoArea.z);
+	// 左に回転中
+	if (!CheckHitKey(KEY_INPUT_LEFT))
+	{
+		// 遠近法カメラの回転処理
+		RLrotate(speed, cameraPerspectiveArea.x, cameraPerspectiveArea.z);
 
 
-	//	// カメラの方向
-	//	if ((angle >= DX_TWO_PI_F && !BASICPARAM::cameraHorizonReturn)
-	//		|| (angle <= -DX_TWO_PI_F && BASICPARAM::cameraHorizonReturn))
-	//	{
-	//		angle = 0;
-	//	}
-	//	angle = angle + (speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f));
-	//}
-	//// 右に回転中
-	//if (DLLXinput::GetPadThumbData(DLLXinput::GetPlayerPadNumber(), DLLXinput::XINPUT_PAD::STICK_RIGHT_X) > 0)
-	//{
-	//	// 遠近法カメラの回転処理
-	//	RLrotate(-speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f), cameraPerspectiveArea.x, cameraPerspectiveArea.z);
-	//	// 正射影カメラの回転処理
-	//	RLrotate(-speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f), cameraOrthoArea.x, cameraOrthoArea.z);
+		// カメラの方向
+		if (angle > DX_TWO_PI_F)
+		{
+			angle = 0;
+		}
+		angle += speed;
+	}
+	// 右に回転中
+	if (!CheckHitKey(KEY_INPUT_RIGHT))
+	{
+		// 遠近法カメラの回転処理
+		RLrotate(-speed, cameraPerspectiveArea.x, cameraPerspectiveArea.z);
 
 
-	//	// カメラの方向
-	//	if ((angle <= -DX_TWO_PI_F && !BASICPARAM::cameraHorizonReturn)
-	//		|| (angle >= DX_TWO_PI_F && BASICPARAM::cameraHorizonReturn))
-	//	{
-	//		angle = 0;
-	//	}
-	//	angle = angle - (speed * (BASICPARAM::cameraHorizonReturn ? -1.0f : 1.0f));
-	//}
+		// カメラの方向
+		if (angle < -DX_TWO_PI_F)
+		{
+			angle = 0;
+		}
+		angle -= speed;
+	}
 
-
-	// 3Dサウンドの更新
-	// SoundProcess::SetLisnerViewArea(perspesctiveViewArea);
-	// SoundProcess::SetLisnerArea(cameraPerspectiveArea);
+	SetCameraPositionAndTarget_UpVecY(VAdd(cameraPerspectiveArea, charaArea), VAdd(perspesctiveViewArea, charaArea));
 }
